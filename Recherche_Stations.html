@@ -168,8 +168,9 @@ pre code {
 </div>
 
 
+<p>Script pour obetnir la liste des stations</p>
 <pre class="r"><code>rm(list = objects())
-setwd(&quot;D:/Documents/Etudes/StatML/Projet_ML&quot;)
+setwd(&quot;D:/Documents/Etudes/StatML/Projet_ML/StatML_ProjectML&quot;)
 library(httr)
 library(jsonlite)
 library(tidyverse)</code></pre>
@@ -196,7 +197,7 @@ data = read_delim(res$content)</code></pre>
 <pre><code>## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>write_delim(data, paste(&quot;Data/Liste_Stations/Liste_Stations_&quot;, 
+<pre class="r"><code>write_delim(data, paste(&quot;../Data/Brut/Liste_Stations_&quot;, 
                         formatC(nb_listes_stations, width = 2, flag = 0), 
                         &quot;.csv&quot;,
                         sep = &quot;&quot;),
@@ -206,7 +207,7 @@ while (res$status_code == 206) {
   res = GET(&quot;https://hubeau.eaufrance.fr/api/v1/hydrometrie/referentiel/stations.csv&quot;, 
             query = list(page = paste(nb_listes_stations))) 
   data = read_delim(res$content)
-  write_delim(data, paste(&quot;Data/Liste_Stations/Liste_Stations_&quot;, 
+  write_delim(data, paste(&quot;../Data/Brut/Liste_Stations_&quot;, 
                           formatC(nb_listes_stations, width = 2, flag = 0),
                           &quot;.csv&quot;,
                           sep = &quot;&quot;),
@@ -252,7 +253,7 @@ while (res$status_code == 206) {
 <pre><code>## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 475 Columns: 38</code></pre>
+<pre><code>## Rows: 490 Columns: 38</code></pre>
 <pre><code>## -- Column specification --------------------------------------------------------
 ## Delimiter: &quot;;&quot;
 ## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
@@ -266,7 +267,7 @@ while (res$status_code == 206) {
 <pre><code>## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>data = read_delim(paste(&quot;Data/Liste_Stations/Liste_Stations_&quot;, 
+<pre class="r"><code>data = read_delim(paste(&quot;../Data/Brut/Liste_Stations_&quot;, 
                         formatC(1, width = 2, flag = 0),
                         &quot;.csv&quot;,
                         sep = &quot;&quot;))</code></pre>
@@ -281,70 +282,17 @@ while (res$status_code == 206) {
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>for (i in 2:nb_listes_stations){
-  nouvelle_liste = read_delim(paste(&quot;Data/Liste_Stations/Liste_Stations_&quot;, 
+  nouvelle_liste = read_delim(paste(&quot;../Data/Brut/Liste_Stations_&quot;, 
                                     formatC(i, width = 2, flag = 0),
                                     &quot;.csv&quot;,
-                                    sep = &quot;&quot;))
+                                    sep = &quot;&quot;),
+                              show_col_types = FALSE)
   if (nrow(nouvelle_liste)&gt;0){
       nouvelle_liste = mutate(nouvelle_liste, code_region = paste(code_region))
       data = data %&gt;% add_row(nouvelle_liste)
   }
-}</code></pre>
-<pre><code>## Rows: 1000 Columns: 38</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;;&quot;
-## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
-## dbl  (14): coordonnee_x_station, coordonnee_y_station, code_projection, long...
-## lgl   (1): en_service
-## dttm  (6): date_maj_station, date_ouverture_station, date_fermeture_station,...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 1000 Columns: 38</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;;&quot;
-## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
-## dbl  (14): coordonnee_x_station, coordonnee_y_station, code_projection, long...
-## lgl   (1): en_service
-## dttm  (6): date_maj_station, date_ouverture_station, date_fermeture_station,...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 1000 Columns: 38</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;;&quot;
-## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
-## dbl  (14): coordonnee_x_station, coordonnee_y_station, code_projection, long...
-## lgl   (1): en_service
-## dttm  (6): date_maj_station, date_ouverture_station, date_fermeture_station,...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 1000 Columns: 38</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;;&quot;
-## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
-## dbl  (14): coordonnee_x_station, coordonnee_y_station, code_projection, long...
-## lgl   (1): en_service
-## dttm  (6): date_maj_station, date_ouverture_station, date_fermeture_station,...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 475 Columns: 38</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;;&quot;
-## chr  (17): code_site, libelle_site, code_station, libelle_station, type_stat...
-## dbl  (14): coordonnee_x_station, coordonnee_y_station, code_projection, long...
-## lgl   (1): en_service
-## dttm  (6): date_maj_station, date_ouverture_station, date_fermeture_station,...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Rows: 0 Columns: 0</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>write_delim(data, &quot;Data/Liste_Stations/Liste_Stations.csv&quot;,
+}
+write_delim(data, &quot;../Data/Liste_Stations.csv&quot;,
             delim = &quot;;&quot;)</code></pre>
 
 

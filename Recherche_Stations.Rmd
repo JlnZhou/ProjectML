@@ -3,9 +3,11 @@ title: "R Notebook"
 output: html_document
 ---
 
+Script pour obetnir la liste des stations
+
 ```{r}
 rm(list = objects())
-setwd("D:/Documents/Etudes/StatML/Projet_ML")
+setwd("D:/Documents/Etudes/StatML/Projet_ML/StatML_ProjectML")
 library(httr)
 library(jsonlite)
 library(tidyverse)
@@ -16,7 +18,7 @@ On extrait la liste des stations.
 res = GET("https://hubeau.eaufrance.fr/api/v1/hydrometrie/referentiel/stations.csv")
 nb_listes_stations = 1
 data = read_delim(res$content)
-write_delim(data, paste("Data/Liste_Stations/Liste_Stations_", 
+write_delim(data, paste("../Data/Brut/Liste_Stations_", 
                         formatC(nb_listes_stations, width = 2, flag = 0), 
                         ".csv",
                         sep = ""),
@@ -26,29 +28,33 @@ while (res$status_code == 206) {
   res = GET("https://hubeau.eaufrance.fr/api/v1/hydrometrie/referentiel/stations.csv", 
             query = list(page = paste(nb_listes_stations))) 
   data = read_delim(res$content)
-  write_delim(data, paste("Data/Liste_Stations/Liste_Stations_", 
+  write_delim(data, paste("../Data/Brut/Liste_Stations_", 
                           formatC(nb_listes_stations, width = 2, flag = 0),
                           ".csv",
                           sep = ""),
               delim = ";")
 }
 
-data = read_delim(paste("Data/Liste_Stations/Liste_Stations_", 
+```
+
+
+```{r}
+
+data = read_delim(paste("../Data/Brut/Liste_Stations_", 
                         formatC(1, width = 2, flag = 0),
                         ".csv",
                         sep = ""))
 for (i in 2:nb_listes_stations){
-  nouvelle_liste = read_delim(paste("Data/Liste_Stations/Liste_Stations_", 
+  nouvelle_liste = read_delim(paste("../Data/Brut/Liste_Stations_", 
                                     formatC(i, width = 2, flag = 0),
                                     ".csv",
-                                    sep = ""))
+                                    sep = ""),
+                              show_col_types = FALSE)
   if (nrow(nouvelle_liste)>0){
       nouvelle_liste = mutate(nouvelle_liste, code_region = paste(code_region))
       data = data %>% add_row(nouvelle_liste)
   }
 }
-write_delim(data, "Data/Liste_Stations/Liste_Stations.csv",
+write_delim(data, "../Data/Liste_Stations.csv",
             delim = ";")
 ```
-
-On choisit de travailler 
