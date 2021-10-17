@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Notebook pour extraire les données des requetes hydro pour qtfix.
+
+```{r}
+rm(list = objects())
+setwd("D:/Documents/Etudes/StatML/Projet_ML/StatML_ProjectML")
+library(tidyverse)
+```
+
+Paramètres:
+
+```{r}
+file_name = "../Data/Brut/qtfix/14436_3_qtfix.csv"
+colonnes = c("Date", "Q (m3/s)", "Validité")
+timestep = 2 # En heures
+annee = 2019
+```
+
+Lecture du ficher
+```{r}
+reading = file(file_name, open = "r")
+lines_read = readLines(reading)
+close(reading)
+
+lines_read = strsplit(lines_read, ";")
+nlines = length(lines_read)
+current_line = 7
+```
+
+```{r}
+liste_codes = c()
+liste_stations = c()
+while(current_line < nlines){
+  code_station = lines_read[[current_line]][1]
+  libelle_station = lines_read[[current_line]][2]
+  
+  print(paste(code_station, ": ", libelle_station, ", ligne: ", current_line, sep = ""))
+  current_line = current_line + 3
+  if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == colonnes[1]){
+    current_line = current_line + 1
+    newline = data.frame(as.list(lines_read[[current_line]]))
+    names(newline) = colonnes
+    donnees = tibble(newline)
+  
+    current_line = current_line + 1
+    while(current_line < nlines && 
+          !is.na(lines_read[[current_line]][1])){
+      newline = data.frame(as.list(lines_read[[current_line]]))
+      names(newline) = colonnes
+      donnees = donnees %>% add_row(newline)
+      current_line = current_line + 1
+    }
+  
+    write_delim(donnees, paste("../Data/Seine/",
+                             code_station,
+                             "_",
+                             annee,
+                             ".csv",
+                             sep = ""),
+              delim = ";")
+    
+    liste_codes = c(liste_codes, code_station)
+    liste_stations = c(liste_stations, libelle_station)
+  }
+  
+  while (current_line < nlines && 
+         (is.na(lines_read[[current_line]][1]) | lines_read[[current_line]][1] != "Code station")){
+    current_line = current_line + 1
+  }
+  current_line = current_line + 1
+}
+tableau_stations = tibble("Code station" = liste_codes, "Libelle station" = liste_stations)
+write_delim(tableau_stations, paste("../Data/Seine/Stations_",
+                                    annee,
+                                    ".csv",
+                                    sep = ""),
+            delim = ";")
+```
