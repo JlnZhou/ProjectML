@@ -58,3 +58,11 @@ for (i in 2:nb_listes_stations){
 write_delim(data, "../Data/Liste_Stations.csv",
             delim = ";")
 ```
+
+```{r}
+data = read_delim("../Data/Liste_Stations.csv")
+data %>% count(libelle_cours_eau, sort = TRUE)
+write_delim(data %>% count(libelle_cours_eau, sort = TRUE), "../Data/Liste_Stations_CoursEau.csv",
+            delim =";")
+```
+
