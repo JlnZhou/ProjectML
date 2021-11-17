@@ -1,0 +1,97 @@
+Nº	Département	Chef-lieu	Coordonnées du centre de gravité	Commune centrale	Distance au chef-lieu
+01	Ain	Bourg-en-Bresse	46° 05′ 58″ N, 5° 20′ 56″ E	Saint-Martin-du-Mont	14,977
+02	Aisne	Laon	49° 33′ 34″ N, 3° 33′ 30″ E	Clacy-et-Thierret	4,790
+03	Allier	Moulins	46° 23′ 37″ N, 3° 11′ 18″ E	Treban	22,066
+04	Alpes-de-Haute-Provence	Digne-les-Bains	44° 06′ 22″ N, 6° 14′ 38″ E	Digne-les-Bains	1,541
+05	Hautes-Alpes	Gap	44° 39′ 49″ N, 6° 15′ 47″ E	Saint-Jean-Saint-Nicolas	18,623
+06	Alpes-Maritimes	Nice	43° 56′ 15″ N, 7° 06′ 59″ E	Massoins	29,588
+07	Ardèche	Privas	44° 45′ 06″ N, 4° 25′ 29″ E	Saint-Joseph-des-Bancs	13,944
+08	Ardennes	Charleville-Mézières	49° 36′ 56″ N, 4° 38′ 27″ E	Mazerny	18,199
+09	Ariège	Foix	42° 55′ 15″ N, 1° 30′ 14″ E	Brassac	9,850
+10	Aube	Troyes	48° 18′ 16″ N, 4° 09′ 42″ E	Villechétif	6,513
+11	Aude	Carcassonne	43° 06′ 12″ N, 2° 24′ 51″ E	Ladern-sur-Lauquet	13,193
+12	Aveyron	Rodez	44° 16′ 49″ N, 2° 40′ 47″ E	Pont-de-Salars	11,414
+13	Bouches-du-Rhône	Marseille	43° 32′ 36″ N, 5° 05′ 11″ E	Saint-Chamas	35,732
+14	Calvados	Caen	49° 05′ 59″ N, 0° 21′ 49″ O	May-sur-Orne	9,181
+15	Cantal	Aurillac	45° 03′ 04″ N, 2° 40′ 07″ E	Thiézac	22,673
+16	Charente	Angoulême	45° 43′ 05″ N, 0° 12′ 06″ E	Champniers	8,313
+17	Charente-Maritime	La Rochelle	45° 46′ 51″ N, 0° 40′ 28″ O	Saint-Georges-des-Coteaux	55,889
+18	Cher	Bourges	47° 03′ 53″ N, 2° 29′ 28″ E	Osmoy	7,523
+19	Corrèze	Tulle	45° 21′ 25″ N, 1° 52′ 37″ E	Corrèze	13,234
+2A	Corse-du-Sud	Ajaccio	41° 51′ 49″ N, 8° 59′ 17″ E	Santa-Maria-Siché	21,919
+2B	Haute-Corse	Bastia	42° 23′ 39″ N, 9° 12′ 23″ E	Lano	39,492
+21	Côte-d'Or	Dijon	47° 25′ 29″ N, 4° 46′ 20″ E	Saint-Martin-du-Mont	23,267
+22	Côtes-d'Armor	Saint-Brieuc	48° 26′ 28″ N, 2° 51′ 51″ O	Plaine-Haute	10,860
+23	Creuse	Guéret	46° 05′ 25″ N, 2° 01′ 08″ E	Ahun	14,633
+24	Dordogne	Périgueux	45° 06′ 15″ N, 0° 44′ 29″ E	Notre-Dame-de-Sanilhac	9,082
+25	Doubs	Besançon	47° 09′ 55″ N, 6° 21′ 42″ E	Chevigney-lès-Vercel	27,062
+26	Drôme	Valence	44° 41′ 03″ N, 5° 10′ 05″ E	Saint-Sauveur-en-Diois	35,230
+27	Eure	Évreux	49° 06′ 49″ N, 0° 59′ 46″ E	Quittebeuf	12,686
+28	Eure-et-Loir	Chartres	48° 23′ 15″ N, 1° 22′ 13″ E	Nogent-sur-Eure	11,321
+29	Finistère	Quimper	48° 15′ 40″ N, 4° 03′ 32″ O	Lopérec	29,514
+30	Gard	Nîmes	43° 59′ 36″ N, 4° 10′ 49″ E	Boucoiran-et-Nozières	22,530
+31	Haute-Garonne	Toulouse	43° 21′ 31″ N, 1° 10′ 22″ E	Longages	34,983
+32	Gers	Auch	43° 41′ 34″ N, 0° 27′ 12″ E	Ordan-Larroque	11,811
+33	Gironde	Bordeaux	44° 49′ 31″ N, 0° 34′ 31″ O	Bordeaux	1,427
+34	Hérault	Montpellier	43° 34′ 47″ N, 3° 22′ 02″ E	Cabrières	41,195
+35	Ille-et-Vilaine	Rennes	48° 09′ 16″ N, 1° 38′ 19″ O	Betton	5,352
+36	Indre	Châteauroux	46° 46′ 40″ N, 1° 34′ 33″ E	Niherne / Saint-Maur	9,484
+37	Indre-et-Loire	Tours	47° 15′ 29″ N, 0° 41′ 29″ E	Sorigny	35,253
+38	Isère	Grenoble	45° 15′ 48″ N, 5° 34′ 34″ E	Veurey-Voroize	14,485
+39	Jura	Lons-le-Saunier	46° 43′ 42″ N, 5° 41′ 52″ E	La Marre	12,411
+40	Landes	Mont-de-Marsan	43° 57′ 56″ N, 0° 47′ 02″ O	Villenave	24,208
+41	Loir-et-Cher	Blois	47° 37′ 00″ N, 1° 25′ 46″ E	Saint-Claude-de-Diray	8,006
+42	Loire	Saint-Étienne	45° 43′ 37″ N, 4° 09′ 57″ E	Poncins	36,966
+43	Haute-Loire	Le Puy-en-Velay	45° 07′ 41″ N, 3° 48′ 23″ E	Saint-Paulien	11,213
+44	Loire-Atlantique	Nantes	47° 21′ 41″ N, 1° 40′ 56″ O	Notre-Dame-des-Landes	18,676
+45	Loiret	Orléans	47° 54′ 43″ N, 2° 20′ 39″ E	Saint-Martin-d'Abbat	32,437
+46	Lot	Cahors	44° 37′ 27″ N, 1° 36′ 17″ E	Soulomès	23,432
+47	Lot-et-Garonne	Agen	44° 22′ 03″ N, 0° 27′ 37″ E	Granges-sur-Lot	22,128
+48	Lozère	Mende	44° 31′ 02″ N, 3° 30′ 01″ E	Mende	0,262
+49	Maine-et-Loire	Angers	47° 23′ 27″ N, 0° 33′ 51″ O	Mûrs-Erigné	9,228
+50	Manche	Saint-Lô	49° 04′ 46″ N, 1° 19′ 39″ O	Camprond	17,593
+51	Marne	Châlons-en-Champagne	48° 56′ 57″ N, 4° 14′ 19″ E	Saint-Pierre	9,268
+52	Haute-Marne	Chaumont	48° 06′ 34″ N, 5° 13′ 35″ E	Chamarandes-Choignes	6,496
+53	Mayenne	Laval	48° 08′ 48″ N, 0° 39′ 29″ O	La Chapelle-Anthenaise	11,678
+54	Meurthe-et-Moselle	Nancy	48° 47′ 13″ N, 6° 09′ 54″ E	Malleloy	10,471
+55	Meuse	Bar-le-Duc	48° 59′ 22″ N, 5° 22′ 54″ E	Récourt-le-Creux	29,081
+56	Morbihan	Vannes	47° 50′ 47″ N, 2° 48′ 36″ O	Moustoir-Ac	21,496
+57	Moselle	Metz	49° 02′ 14″ N, 6° 39′ 48″ E	Guessling-Hémering	36,524
+58	Nièvre	Nevers	47° 06′ 55″ N, 3° 30′ 17″ E	Saint-Saulge	29,320
+59	Nord	Lille	50° 26′ 50″ N, 3° 13′ 14″ E	Coutiches	23,852
+60	Oise	Beauvais	49° 24′ 37″ N, 2° 25′ 31″ E	Fitz-James	23,955
+61	Orne	Alençon	48° 37′ 25″ N, 0° 07′ 44″ E	Belfonds	21,714
+62	Pas-de-Calais	Arras	50° 29′ 37″ N, 2° 17′ 19″ E	Fontaine-lès-Boulans	41,581
+63	Puy-de-Dôme	Clermont-Ferrand	45° 43′ 33″ N, 3° 08′ 27″ E	Pérignat-lès-Sarliève	7,815
+64	Pyrénées-Atlantiques	Pau	43° 15′ 24″ N, 0° 45′ 41″ O	Gurs	32,163
+65	Hautes-Pyrénées	Tarbes	43° 03′ 11″ N, 0° 09′ 50″ E	Gerde	21,097
+66	Pyrénées-Orientales	Perpignan	42° 36′ 00″ N, 2° 31′ 20″ E	Finestret	32,418
+67	Bas-Rhin	Strasbourg	48° 40′ 15″ N, 7° 33′ 05″ E	Schnersheim	18,301
+68	Haut-Rhin	Colmar	47° 51′ 31″ N, 7° 16′ 27″ E	Feldkirch	25,513
+69	Rhônenote 2	Lyon	45° 52′ 13″ N, 4° 38′ 29″ E	Châtillon	19,819
+70	Haute-Saône	Vesoul	47° 38′ 28″ N, 6° 05′ 10″ E	Montigny-lès-Vesoul	5,593
+71	Saône-et-Loire	Mâcon	46° 38′ 41″ N, 4° 32′ 32″ E	Collonge-en-Charollais	43,647
+72	Sarthe	Le Mans	47° 59′ 40″ N, 0° 13′ 20″ E	Le Mans	2,168
+73	Savoie	Chambéry	45° 28′ 39″ N, 6° 26′ 37″ E	Les Avanchers-Valmorel	42,666
+74	Haute-Savoie	Annecy	46° 02′ 04″ N, 6° 25′ 41″ E	Brizon	26,302
+75	Paris	Paris	48° 51′ 24″ N, 2° 20′ 32″ E	Paris	0,711
+76	Seine-Maritime	Rouen	49° 39′ 18″ N, 1° 01′ 35″ E	Varneville-Bretteville	24,110
+77	Seine-et-Marne	Melun	48° 37′ 36″ N, 2° 56′ 00″ E	Quiers	22,253
+78	Yvelines	Versailles	48° 48′ 54″ N, 1° 50′ 30″ E	Vicq	21,491
+79	Deux-Sèvres	Niort	46° 33′ 20″ N, 0° 19′ 02″ O	Mazières-en-Gâtine	27,784
+80	Somme	Amiens	49° 57′ 29″ N, 2° 16′ 40″ E	Bertangles	7,215
+81	Tarn	Albi	43° 47′ 07″ N, 2° 09′ 58″ E	Réalmont	16,035
+82	Tarn-et-Garonne	Montauban	44° 05′ 09″ N, 1° 16′ 55″ E	Villemade	9,567
+83	Var	Toulon	43° 27′ 38″ N, 6° 13′ 05″ E	Carcès	44,226
+84	Vaucluse	Avignon	43° 59′ 38″ N, 5° 11′ 10″ E	Venasque	29,920
+85	Vendée	La Roche-sur-Yon	46° 40′ 29″ N, 1° 17′ 52″ O	La Chaize-le-Vicomte	9,231
+86	Vienne	Poitiers	46° 33′ 50″ N, 0° 27′ 37″ E	Saint-Julien-l'Ars	9,694
+87	Haute-Vienne	Limoges	45° 53′ 30″ N, 1° 14′ 07″ E	Couzeix	4,768
+88	Vosges	Épinal	48° 11′ 48″ N, 6° 22′ 50″ E	Uxegney	5,781
+89	Yonne	Auxerre	47° 50′ 23″ N, 3° 33′ 52″ E	Monéteau	4,573
+90	Territoire de Belfort	Belfort	47° 37′ 54″ N, 6° 55′ 43″ E	Chèvremont	4,980
+91	Essonne	Évry	48° 31′ 20″ N, 2° 14′ 35″ E	Lardy	17,759
+92	Hauts-de-Seine	Nanterre	48° 50′ 50″ N, 2° 14′ 45″ E	Boulogne-Billancourt / Paris 16e	6,762
+93	Seine-Saint-Denis	Bobigny	48° 55′ 03″ N, 2° 28′ 41″ E	Bondy	2,904
+94	Val-de-Marne	Créteil	48° 46′ 39″ N, 2° 28′ 08″ E	Créteil	1,577
+95	Val-d'Oise	Pontoise	49° 04′ 58″ N, 2° 07′ 52″ E	Auvers-sur-Oise	4,067

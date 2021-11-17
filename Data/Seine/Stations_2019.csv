@@ -1,0 +1,18 @@
+Code station;Libelle station;Regime influencé;Altitude du zéro de l'échelle;Coordonnées;X (m);Y (m)
+H0020010;La Seine à Quemigny-sur-Seine [Cosne];pas ou faiblement;288.05;Lambert II Étendu;775157;2300217
+H0100010;La Seine à Nod-sur-Seine;pas ou faiblement;248.25;Lambert II Étendu;767439;2309604
+H0100020;La Seine à Plaines-Saint-Lange;pas ou faiblement;179.35;Lambert II Étendu;760029;2335130
+H0400010;La Seine à Bar-sur-Seine;pas ou faiblement;148;Lambert II Étendu;751916;2348365
+H0400020;La Seine à Courtenot;pas ou faiblement;0;Lambert II Étendu;746950;2351620
+H0800011;La Seine [partielle] à Troyes [Foicy];fortement;102;Lambert II Étendu;731065;2368493
+H0800012;La Seine [partielle] à Troyes [Tauxelles];fortement;100;Lambert II Étendu;729271;2369769
+H0810010;La Seine à Méry-sur-Seine [après création grands lacs];fortement;78;Lambert II Étendu;714764;2390999
+H1700010;La Seine à Pont-sur-Seine;fortement;60;Lambert II Étendu;692920;2392352
+H1940020;La Seine à Bazoches-lès-Bray [station ultrason];fortement;52.59;Lambert II Étendu;663190;2381000
+H2900011;La Seine à Montereau-Fault-Yonne [station US];;45.77;Lambert II Étendu;646210;2376785
+H3930020;La Seine à Saint-Fargeau-Ponthierry [Sainte-Assise];fortement;34.72;Lambert II Étendu;615835;2393175
+H4340020;La Seine à Alfortville;pas ou faiblement;29.46;Lambert II Étendu;605979;2420343
+H5920011;La Seine à Paris [Austerlitz avant création lacs];fortement;25.92;Lambert II Étendu;602142;2427451
+H5920014;La Seine à Paris-13e__Arrondissement [pont d'Austerlitz - station US];;25.92;Lambert II Étendu;602130;2427440
+H8100020;La Seine à Vernon;;9.16;Lambert II Étendu;538060;2455707
+H8100021;La Seine à Vernon;;9.16;Lambert II Étendu;538060;2455707
