@@ -33,9 +33,28 @@ knitr::opts_knit$set(root.dir = dirname(rstudioapi::getActiveDocumentContext()$p
 knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Rhone")
 ```
 
+Deux tâches en gros: 
+1. prédiction individuelle d'une seulement station, basé sur les données de dix ans.
+2. modèle global de tous les stations sur la Seine, ou même sur tous les fleuves.
+
+1. prédiction individuelle d'une seulement station
+covariables: les dépits d'eau en amont et les météo, avant certain temps.
+
+paramètres météo:
+"'''Parameter(s):\n",
+    "T2M             MERRA-2 Temperature at 2 Meters (C) \n",
+    "T2MDEW          MERRA-2 Dew/Frost Point at 2 Meters (C)\n",
+    "T2MWET          MERRA-2 Wet Bulb Temperature at 2 Meters (C) \n",
+    "QV2M            MERRA-2 Specific Humidity at 2 Meters (g/kg) \n",
+    "RH2M            MERRA-2 Relative Humidity at 2 Meters (%) \n",
+    "PRECTOTCORR     MERRA-2 Precipitation Corrected (mm/hour) '''\n"
+    
+    
+```{r}
+tableau_stations <- read.delim("../Data/Seine/ordre_amont.csv",encoding = "UTF-8", sep = ",", header = TRUE)
 
 
-
+```
 
 
 
