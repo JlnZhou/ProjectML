@@ -1,0 +1,41 @@
+---
+title: "regression_rhone"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=objects())
+###############packages
+library(dygraphs)
+library(xts)
+library(MASS)
+library(caret)
+
+rmse<-function(eps)
+{
+	return(round(sqrt(mean(eps^2,na.rm=TRUE)),digits=0))
+}
+
+mape<-function(y,ychap)
+{
+	return(round(100*mean(abs(y-ychap)/abs(y)),digits=2))
+}
+
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = dirname(rstudioapi::getActiveDocumentContext()$path))
+knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Rhone")
+```
+
+Faisons la régression d'abord sur le Rhône parce que le nombre de stations sur le Rhône est inchangé pendant le temps, c'est facile relativement.
+
+
+
+
+
