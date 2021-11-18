@@ -51,7 +51,7 @@ paramètres météo:
     
     
 ```{r}
-tableau_stations <- read.delim("../Data/Seine/ordre_amont.csv",encoding = "UTF-8", sep = ",", header = TRUE)
+tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF-8", sep=";", header = TRUE)
 
 
 ```
