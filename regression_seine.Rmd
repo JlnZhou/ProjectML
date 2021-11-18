@@ -1,5 +1,5 @@
 ---
-title: "regression_rhone"
+title: "regression_seine"
 output: html_document
 ---
 
@@ -33,7 +33,7 @@ knitr::opts_knit$set(root.dir = dirname(rstudioapi::getActiveDocumentContext()$p
 knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Rhone")
 ```
 
-Faisons la régression d'abord sur le Rhône parce que le nombre de stations sur le Rhône est inchangé pendant le temps, c'est facile relativement.
+
 
 
 
