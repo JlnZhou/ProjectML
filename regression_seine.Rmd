@@ -11,7 +11,8 @@ library(dygraphs)
 library(xts)
 library(MASS)
 library(caret)
-library(dplyr)
+library(tidyverse)
+
 
 rmse<-function(eps)
 {
@@ -64,19 +65,19 @@ tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF
 
 ```{r}
 data_files <- list.files("../Data/Extraction_Hydro/Seine")  # Identify file names
-data_files                                                    # Print file names
-# "data1.csv" "data2.csv" "data3.csv"
+pont_list <- data_files[grepl("H1700010", data_files)]
+pont_list
+pont <- lapply(paste0("../Data/Extraction_Hydro/Seine/",pont_list), read.csv2)
+pont <- rbindlist(pont)
+pont <- as_tibble(pont)
+names(pont) <- c("date","debit","validite")
 ```
 
 
-
-
-
-
-
-
-
-
+```{r}
+attach(pont)
+plot(Load, type='l')
+```
 
 
 
