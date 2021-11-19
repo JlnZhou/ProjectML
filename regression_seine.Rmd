@@ -62,11 +62,19 @@ tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF
 
 ```
 
+Meteo d'un endroit
+```{r}
+alsace_meteo = read_delim("../Data/meteo/Alsace Champagne-Ardenne Lorraine.csv")
+plot(alsace_meteo$PRECTOTCORR[7200:7920], pch=20)
+#plot(abs(fft(alsace_meteo$PRECTOTCORR, inverse = FALSE)))
+```
+
+
 1.1 Méthode de Fourier
 
 ```{r}
 data_files <- list.files("../Data/Extraction_Hydro/Seine")  # Identify file names
-pont_list <- data_files[grepl("H1700010", data_files)]
+pont_list <- data_files[grepl("H1700010", data_files)][1:10]
 pont_list
 pont <- lapply(paste0("../Data/Extraction_Hydro/Seine/",pont_list), read.csv2)
 pont <- rbindlist(pont)
@@ -89,13 +97,15 @@ summary(lm0)
 attach(pont)
 plot(debit, type='l')
 
+plot(abs(fft(debit, inverse = FALSE)))
+
 #####################création de la base de fourier
-w<-2*pi/52.2
+w<-2*pi/4380
 Nfourier<-20
 for(i in c(1:Nfourier))
 {
-	assign(paste("cos", i, sep=""),cos(w*(annee-10)*i))
-	assign(paste("sin", i, sep=""),sin(w*(annee-10)*i))
+	assign(paste("cos", i, sep=""),cos(w*(index_period)*i))
+	assign(paste("sin", i, sep=""),sin(w*(index_period)*i))
 }
 
 objects()
