@@ -72,24 +72,27 @@ pont <- rbindlist(pont)
 pont <- as_tibble(pont)
 names(pont) <- c("date","debit","validite")
 pont$date <- as.POSIXct(date, format = "%d/%m/%Y %H:%M")
-pont$jour <- format(pont$date, format="%d")
-pont$mois <- format(pont$date, format="%m")
-pont$annee <- format(pont$date, format="%y")
-    
+pont$jour <- as.integer(format(pont$date, format="%d"))
+pont$mois <- as.integer(format(pont$date, format="%m"))
+pont$annee <- as.integer(format(pont$date, format="%y"))
+pont$debit <- as.numeric(pont$debit)
 ```
 
 
 ```{r}
+lm0<-lm(debit~annee,data=data0)
+debit.detrend<-pont$debit-lm0$fitted
+summary(lm0)
 attach(pont)
-plot(Load, type='l')
+plot(debit, type='l')
 
 #####################création de la base de fourier
 w<-2*pi/52.2
 Nfourier<-20
 for(i in c(1:Nfourier))
 {
-	assign(paste("cos", i, sep=""),cos(w*Time*i))
-	assign(paste("sin", i, sep=""),sin(w*Time*i))
+	assign(paste("cos", i, sep=""),cos(w*(annee-10)*i))
+	assign(paste("sin", i, sep=""),sin(w*(annee-10)*i))
 }
 
 objects()
@@ -126,7 +129,7 @@ for(i in c(1:Nfourier))
 	cos<-paste(c('cos'),c(1:i),sep="")
 	sin<-paste(c('sin'),c(1:i),sep="")
 	fourier<-paste(c(cos,sin),collapse="+")
-	eq[[i]]<-as.formula(paste("Load.detrend~",fourier,sep=""))
+	eq[[i]]<-as.formula(paste("debit.detrend~",fourier,sep=""))
 	lm.fourier[[i]]<-lm(eq[[i]],data=pont)
 }
 
@@ -152,14 +155,14 @@ plot(adjR,type='b',pch=20,xlab='K',ylab='adjusted R-squared')
 points(5,adjR[5],col='red',pch=20,cex=2)
 
 par(mfrow=c(1,2))
-plot(pont$Load.detrend,type='l', lwd=2)
+plot(pont$debit.detrend,type='l', lwd=2)
 lines(lm.fourier[[20]]$fitted,col='red', lwd=2)
 par(mfrow=c(1,1))
-plot(pont$Load.detrend,type='l', lwd=2)
+plot(pont$debit.detrend,type='l', lwd=2)
 lines(lm.fourier[[5]]$fitted,col='red', lwd=2)
 
 
-plot(pont$Load.detrend[1:52],type='l', lwd=2)
+plot(pont$debit.detrend[1:52],type='l', lwd=2)
 lines(lm.fourier[[20]]$fitted[1:52],col='red', lwd=2)
 
 lines(lm.fourier[[5]]$fitted[1:52],col='red', lwd=2)
