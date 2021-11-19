@@ -1,9 +1,9 @@
 ---
-title: "R Notebook"
+title: "Extraction des données depuis Hydro"
 output: html_notebook
 ---
 
-Notebook pour extraire les données des requetes hydro pour qtfix et fiche_station.
+Notebook pour extraire les données des requêtes Hydro pour fiche-station et qtfix.
 
 ```{r}
 rm(list = objects())
@@ -11,128 +11,207 @@ setwd("D:/Documents/Etudes/StatML/Projet_ML/StatML_ProjectML")
 library(tidyverse)
 library(stringr)
 ```
-
-Paramètres pour qt:
-
+Paramètres:
 ```{r}
-qtfix_file_name = "../Data/Brut/qtfix/14436_3_qtfix.csv"
+fleuves = c("Garonne", "Loire", "Rhone", "Seine")
+annees = seq(2010,2020)
 qtfix_colonnes = c("Date", "Q (m3/s)", "Validité")
-fiche_file_name = "../Data/Brut/fiche-station/14436_6_fiche-station.csv"
-annee = 2019
 ```
 
-Lecture du ficher qtfix .
+Lecture des fichiers qtfix
 ```{r}
-reading = file(qtfix_file_name, open = "r")
-lines_read = readLines(reading)
-close(reading)
-
-lines_read = strsplit(lines_read, ";")
-nlines = length(lines_read)
-current_line = 7
-```
-
-```{r}
-liste_codes = c()
-liste_stations = c()
-while(current_line < nlines){
-  code_station = lines_read[[current_line]][1]
-  libelle_station = lines_read[[current_line]][2]
-  
-  print(paste(code_station, ": ", libelle_station, ", ligne: ", current_line, sep = ""))
-  current_line = current_line + 3
-  if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == qtfix_colonnes[1]){
-    current_line = current_line + 1
-    newline = data.frame(as.list(lines_read[[current_line]]))
-    names(newline) = qtfix_colonnes
-    donnees = tibble(newline)
-  
-    current_line = current_line + 1
-    while(current_line < nlines && 
-          !is.na(lines_read[[current_line]][1])){
-      newline = data.frame(as.list(lines_read[[current_line]]))
-      names(newline) = qtfix_colonnes
-      donnees = donnees %>% add_row(newline)
+for (c_fleuve in fleuves){
+  for (c_annee in annees){
+    qtfix_filename = paste("../Data/Brut/", c_fleuve, "/qtfix_", c_annee, ".csv", sep = "")
+    print(paste(c_fleuve, c_annee, sep = ": "))
+    
+    # Lecture fichier
+    reading = file(qtfix_filename, open = "r")
+    lines_read = readLines(reading)
+    close(reading)
+    
+    lines_read = strsplit(lines_read, ";")
+    nlines = length(lines_read)
+    current_line = 1 # Première ligne à regarder
+    while (current_line < nlines && 
+         ((is.na(lines_read[[current_line]][1]) | lines_read[[current_line]][1] != "Code station"))){
       current_line = current_line + 1
     }
-  
-    write_delim(donnees, paste("../Data/Seine/",
-                             code_station,
-                             "_",
-                             annee,
-                             ".csv",
-                             sep = ""),
-              delim = ";")
     
-    liste_codes = c(liste_codes, code_station)
-    liste_stations = c(liste_stations, libelle_station)
+    # Interprétation des lignes
+    liste_codes = c()
+    liste_stations = c()
+    while(current_line < nlines){
+      
+      # Station courante
+      code_station = lines_read[[current_line]][1]
+      libelle_station = lines_read[[current_line]][2]
+      print(paste(code_station, ": ", libelle_station, ", ligne: ", current_line, sep = ""))
+      # Si présence de mesures
+      current_line = current_line + 3
+      if (current_line < nlines && 
+          (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == qtfix_colonnes[1])){
+        current_line = current_line + 1
+        newline = data.frame(as.list(lines_read[[current_line]]))
+        names(newline) = qtfix_colonnes
+        donnees = tibble(newline)
+        
+        # Extraction des mesures
+        current_line = current_line + 1
+        while(current_line < nlines && 
+              !is.na(lines_read[[current_line]][1])){
+          newline = data.frame(as.list(lines_read[[current_line]]))
+          names(newline) = qtfix_colonnes
+          donnees = donnees %>% add_row(newline)
+          current_line = current_line + 1
+        }
+        
+        # Ecriture fichier pour annee/station
+        write_delim(donnees, paste("../Data/Extraction_Hydro/",
+                                   c_fleuve,
+                                   "/",
+                                   code_station,
+                                   "_",
+                                   c_annee,
+                                   ".csv",
+                                   sep = ""),
+                    delim = ";")
+        
+        # MAJ de la liste des stations
+        liste_codes = c(liste_codes, code_station)
+        liste_stations = c(liste_stations, libelle_station)
+      }
+      # Recherche de la prochaine station du fichier
+      while (current_line < nlines && 
+             (is.na(lines_read[[current_line]][1]) | lines_read[[current_line]][1] != "Code station")){
+        current_line = current_line + 1
+      }
+      current_line = current_line + 1
+    }
+    
+    # L'ensemble du fichier a été traité
+    tableau_stations = tibble("Code station" = liste_codes, "Libelle station" = liste_stations)
+    write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+                                        c_fleuve,
+                                        "/Stations_",
+                                        c_annee,
+                                        ".csv",
+                                        sep = ""),
+                delim = ";")
+  }
+  }
+
+```
+
+On reprend les données sur les stations. On commence par rassembler la liste de toutes les stations dont on a des données.
+```{r}
+c_fleuve = fleuves[1]
+for (c_fleuve in fleuves){
+  
+  print(c_fleuve)
+  # On récupère la liste de toutes les stations présentes au moins une fois
+  tableau_stations = read_delim(paste("../Data/Extraction_Hydro/",
+                                      c_fleuve,
+                                      "/Stations_",
+                                      annees[1],
+                                      ".csv",
+                                      sep = ""),
+                                delim = ";",
+                                show_col_types = FALSE)
+  for (c_annee in annees){
+    new_stations = read_delim(paste("../Data/Extraction_Hydro/",
+                                      c_fleuve,
+                                      "/Stations_",
+                                      c_annee,
+                                      ".csv",
+                                      sep = ""),
+                                delim = ";",
+                              show_col_types = FALSE)
+    tableau_stations = merge(tableau_stations, new_stations,
+                             all.x = TRUE,
+                             all.y = TRUE,
+                             by = c("Code station", "Libelle station"))
+  }
+  # On regarde les années pour lesquelles chaque station est présente
+  for (c_annee in annees){
+    new_stations = read_delim(paste("../Data/Extraction_Hydro/",
+                                      c_fleuve,
+                                      "/Stations_",
+                                      c_annee,
+                                      ".csv",
+                                      sep = ""),
+                                delim = ";",
+                              show_col_types = FALSE)
+    for (c_station in tableau_stations[["Code station"]]){
+      tableau_stations[[toString(c_annee)]][tableau_stations[["Code station"]] == c_station] = 
+        c_station %in% new_stations[["Code station"]]
+    }
   }
   
-  while (current_line < nlines && 
-         (is.na(lines_read[[current_line]][1]) | lines_read[[current_line]][1] != "Code station")){
+  write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+                                        c_fleuve,
+                                        "/Stations.csv",
+                                        sep = ""),
+                delim = ";")
+  
+}
+
+```
+
+On va ensuite chercher dans les fichiers fiche_station.
+
+```{r}
+for (c_fleuve in fleuves){
+  fiche_filename = paste("../Data/Brut/", c_fleuve, "/fiche-station.csv", sep = "")
+  print(c_fleuve)
+    
+  # Lecture fichier
+  reading = file(fiche_filename, open = "r")
+  lines_read = readLines(reading)
+  close(reading)
+    
+  lines_read = strsplit(lines_read, ";")
+  nlines = length(lines_read)
+  current_line = 1 # Première ligne à regarder
+  
+  # On reprend la liste des stations pertinentes
+  tableau_stations = read_delim(paste("../Data/Extraction_Hydro/",
+                                      c_fleuve,
+                                      "/Stations.csv",
+                                      sep = ""),
+                                delim = ";")
+  current_station = tableau_stations["Code station"][1]
+  
+  # Lecture
+  while (current_line<nlines){
     current_line = current_line + 1
-  }
-  current_line = current_line + 1
-}
-tableau_stations = tibble("Code station" = liste_codes, "Libelle station" = liste_stations)
-write_delim(tableau_stations, paste("../Data/Seine/Stations_",
-                                    annee,
-                                    ".csv",
-                                    sep = ""),
-            delim = ";")
-```
-```{r}
-reading = file(fiche_file_name, open = "r")
-lines_read = readLines(reading)
-close(reading)
-```
-
-```{r}
-lines_read = strsplit(lines_read, ";")
-nlines = length(lines_read)
-```
-
-
-```{r}
-tableau_stations = read_delim(paste("../Data/Seine/Stations_",
-                                    annee,
-                                    ".csv",
-                                    sep = ""),
-            delim = ";")
-```
-
-
-```{r}
-current_station = tableau_stations["Code station"][1]
-current_line = 1
-while (current_line<nlines){
-  current_line = current_line + 1
-  if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Code station"){
-    current_station = str_trim(lines_read[[current_line]][2])
-    tableau_line = which(tableau_stations[, "Code station"] == current_station)
-  }
-  if (current_station %in% tableau_stations[["Code station"]]){
-    if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Régime influencé"){
-      tableau_stations[tableau_line, "Regime influencé"] = lines_read[[current_line]][2]
+    if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Code station"){
+      current_station = str_trim(lines_read[[current_line]][2])
+      tableau_line = which(tableau_stations[, "Code station"] == current_station)
     }
-    if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Altitude du zéro de l'échelle"){
-      tableau_stations[tableau_line, "Altitude du zéro de l'échelle"] = lines_read[[current_line+2]][1]
-    }
-    if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Coordonnées"){
-      tableau_stations[tableau_line, "Coordonnées"] = lines_read[[current_line]][2]
-      if (lines_read[[current_line+1]][1] == "X (m)"){
-        tableau_stations[tableau_line, "X (m)"] = lines_read[[current_line+2]][1]
+    if (current_station %in% tableau_stations[["Code station"]]){
+      if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Régime influencé"){
+        tableau_stations[tableau_line, "Regime influencé"] = lines_read[[current_line]][2]
       }
-      if (lines_read[[current_line+1]][2] == "Y (m)"){
-        tableau_stations[tableau_line, "Y (m)"] = lines_read[[current_line+2]][2]
+      if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Altitude du zéro de l'échelle"){
+        tableau_stations[tableau_line, "Altitude du zéro de l'échelle"] = lines_read[[current_line+2]][1]
+      }
+      if (!is.na(lines_read[[current_line]][1]) & lines_read[[current_line]][1] == "Coordonnées"){
+        tableau_stations[tableau_line, "Coordonnées"] = lines_read[[current_line]][2]
+        if (lines_read[[current_line+1]][1] == "X (m)"){
+          tableau_stations[tableau_line, "X (m)"] = lines_read[[current_line+2]][1]
+        }
+        if (lines_read[[current_line+1]][2] == "Y (m)"){
+          tableau_stations[tableau_line, "Y (m)"] = lines_read[[current_line+2]][2]
+        }
       }
     }
   }
+  write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+                                      c_fleuve,
+                                      "/Stations.csv",
+                                      sep = ""),
+              delim = ";")
 }
-write_delim(tableau_stations, paste("../Data/Seine/Stations_",
-                                    annee,
-                                    ".csv",
-                                    sep = ""),
-            delim = ";")
 ```
 
