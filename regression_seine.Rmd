@@ -11,6 +11,7 @@ library(dygraphs)
 library(xts)
 library(MASS)
 library(caret)
+library(dplyr)
 
 rmse<-function(eps)
 {
@@ -30,7 +31,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 ```{r}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = dirname(rstudioapi::getActiveDocumentContext()$path))
-knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Rhone")
+knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Seine")
 ```
 
 Deux tâches en gros: 
@@ -38,6 +39,9 @@ Deux tâches en gros:
 2. modèle global de tous les stations sur la Seine, ou même sur tous les fleuves.
 
 1. prédiction individuelle d'une seulement station
+
+	
+Prenons la station H1700010: La Seine à Pont-sur-Seine
 covariables: les dépits d'eau en amont et les météo, avant certain temps.
 
 paramètres météo:
@@ -55,6 +59,25 @@ tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF
 
 
 ```
+
+1.1 Méthode de Fourier
+
+```{r}
+data_files <- list.files("../Data/Extraction_Hydro/Seine")  # Identify file names
+data_files                                                    # Print file names
+# "data1.csv" "data2.csv" "data3.csv"
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
