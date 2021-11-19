@@ -11,8 +11,9 @@ library(dygraphs)
 library(xts)
 library(MASS)
 library(caret)
-library(tidyverse)
 
+library(data.table)
+library(tidyverse)
 
 rmse<-function(eps)
 {
@@ -71,16 +72,18 @@ pont <- lapply(paste0("../Data/Extraction_Hydro/Seine/",pont_list), read.csv2)
 pont <- rbindlist(pont)
 pont <- as_tibble(pont)
 names(pont) <- c("date","debit","validite")
-pont$date <- as.POSIXct(date, format = "%d/%m/%Y %H:%M")
+pont$date <- as.POSIXct(pont$date, format = "%d/%m/%Y %H:%M")
 pont$jour <- as.integer(format(pont$date, format="%d"))
 pont$mois <- as.integer(format(pont$date, format="%m"))
 pont$annee <- as.integer(format(pont$date, format="%y"))
 pont$debit <- as.numeric(pont$debit)
+pont <- as.data.frame(pont)
+pont$index_period <- matrix(1:4380,nrow=nrow(pont),ncol=1)
 ```
 
 
 ```{r}
-lm0<-lm(debit~annee,data=data0)
+lm0<-lm(debit~annee,data=pont)
 debit.detrend<-pont$debit-lm0$fitted
 summary(lm0)
 attach(pont)
