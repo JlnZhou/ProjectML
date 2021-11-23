@@ -1,6 +1,9 @@
 ---
 title: "regression_seine"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +17,7 @@ library(caret)
 
 library(data.table)
 library(tidyverse)
-
+library(lubridate)
 rmse<-function(eps)
 {
 	return(round(sqrt(mean(eps^2,na.rm=TRUE)),digits=0))
@@ -27,8 +30,8 @@ mape<-function(y,ychap)
 
 ```
 
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Note that the `echo = FALSE` parameter was added to the code chunk to
+prevent printing of the R code that generated the plot.
 
 ```{r}
 knitr::opts_chunk$set(echo = TRUE)
@@ -36,26 +39,22 @@ knitr::opts_knit$set(root.dir = dirname(rstudioapi::getActiveDocumentContext()$p
 knitr::opts_knit$set(root.dir = "../Data/Extraction_Hydro/Seine")
 ```
 
-Deux tâches en gros: 
-1. prédiction individuelle d'une seulement station, basé sur les données de dix ans.
-2. modèle global de tous les stations sur la Seine, ou même sur tous les fleuves.
+Deux tâches en gros: 1. prédiction individuelle d'une seulement station,
+basé sur les données de dix ans. 2. modèle global de tous les stations
+sur la Seine, ou même sur tous les fleuves.
 
-1. prédiction individuelle d'une seulement station
+## 1.prédiction individuelle d'une seulement station
 
-	
-Prenons la station H1700010: La Seine à Pont-sur-Seine
-covariables: les dépits d'eau en amont et les météo, avant certain temps.
+Prenons la station H1700010: La Seine à Pont-sur-Seine covariables: les
+dépits d'eau en amont et les météo, avant certain temps.
 
-paramètres météo:
-"'''Parameter(s):\n",
-    "T2M             MERRA-2 Temperature at 2 Meters (C) \n",
-    "T2MDEW          MERRA-2 Dew/Frost Point at 2 Meters (C)\n",
-    "T2MWET          MERRA-2 Wet Bulb Temperature at 2 Meters (C) \n",
-    "QV2M            MERRA-2 Specific Humidity at 2 Meters (g/kg) \n",
-    "RH2M            MERRA-2 Relative Humidity at 2 Meters (%) \n",
-    "PRECTOTCORR     MERRA-2 Precipitation Corrected (mm/hour) '''\n"
-    
-    
+paramètres météo: "'''Parameter(s):\n", "T2M MERRA-2 Temperature at 2
+Meters (C) \n", "T2MDEW MERRA-2 Dew/Frost Point at 2 Meters (C)\n",
+"T2MWET MERRA-2 Wet Bulb Temperature at 2 Meters (C) \n", "QV2M MERRA-2
+Specific Humidity at 2 Meters (g/kg) \n", "RH2M MERRA-2 Relative
+Humidity at 2 Meters (%) \n", "PRECTOTCORR MERRA-2 Precipitation
+Corrected (mm/hour) '''\n"
+
 ```{r}
 tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF-8", sep=";", header = TRUE)
 
@@ -63,14 +62,14 @@ tableau_stations <- read.delim("../Data/Seine/Stations_2019.csv",encoding = "UTF
 ```
 
 Meteo d'un endroit
+
 ```{r}
 alsace_meteo = read_delim("../Data/meteo/Alsace Champagne-Ardenne Lorraine.csv")
 plot(alsace_meteo$PRECTOTCORR[7200:7920], pch=20)
 #plot(abs(fft(alsace_meteo$PRECTOTCORR, inverse = FALSE)))
 ```
 
-
-1.1 Méthode de Fourier
+### 1.1 Méthode de Fourier
 
 ```{r}
 data_files <- list.files("../Data/Extraction_Hydro/Seine")  # Identify file names
@@ -88,7 +87,6 @@ pont$debit <- as.numeric(pont$debit)
 pont <- as.data.frame(pont)
 pont$index_period <- matrix(1:4380,nrow=nrow(pont),ncol=1)
 ```
-
 
 ```{r}
 lm0<-lm(debit~annee,data=pont)
@@ -113,7 +111,6 @@ objects()
 plot(cos1,type='l')
 plot(cos10,type='l')
 ```
-
 
 ```{r}
 #####################insertion de la base de fourier dans la data.frame
@@ -182,6 +179,30 @@ lines(lm.fourier[[5]]$fitted[1:52],col='red', lwd=2)
 
 ```
 
+La méthode Fourier n'est pas applicable ici. On voit que R2 ajusté est
+seulement 0.2
 
+Il faut choisir une série temporelle stationnaire si on veut vraiment
+utiliser Fourier...
 
+> ### 1.2 GAM
 
+On
+
+```{r}
+
+meteo <- read.csv2("../Data/meteo/  (1).csv", sep=";", encoding = "UTF-8")
+meteo <- meteo[, c("ID.OMM.station","Date", "Température", "Précipitations.dans.la.dernière.heure", "Précipitations.dans.les.3.dernières.heures") ] 
+meteo <- separate(meteo, col = Date, into = c("Datetime", "timezone"), sep = "\\+")
+meteo <- separate(data = meteo, col = Datetime, into = c("Date", "Time"), sep = "T")
+meteo <- as_tibble(meteo)
+#pont$jour <- as.integer(format(pont$date, format="%d"))
+#pont$mois <- as.integer(format(pont$date, format="%m"))
+#pont$annee <- as.integer(format(pont$date, format="%y"))
+
+#meteo[order(as.Date(meteo$Date, format="%Y-%M-%D"), as.Date(meteo$Time, format="%H:%M:%S")),]
+meteo$Date <- ymd(meteo$Date)
+meteo$Time <- hms(meteo$Time)
+meteo <-arrange(meteo, Date, Time)
+
+```
