@@ -185,7 +185,7 @@ seulement 0.2
 Il faut choisir une série temporelle stationnaire si on veut vraiment
 utiliser Fourier...
 
-> ### 1.2 GAM
+### 1.2 GAM
 
 On
 
