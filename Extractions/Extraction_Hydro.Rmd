@@ -7,7 +7,6 @@ Notebook pour extraire les données des requêtes Hydro pour fiche-station et qt
 
 ```{r}
 rm(list = objects())
-setwd("D:/Documents/Etudes/StatML/Projet_ML/StatML_ProjectML")
 library(tidyverse)
 library(stringr)
 ```
@@ -22,7 +21,7 @@ Lecture des fichiers qtfix
 ```{r}
 for (c_fleuve in fleuves){
   for (c_annee in annees){
-    qtfix_filename = paste("../Data/Brut/", c_fleuve, "/qtfix_", c_annee, ".csv", sep = "")
+    qtfix_filename = paste("../../Data/Brut/", c_fleuve, "/qtfix_", c_annee, ".csv", sep = "")
     print(paste(c_fleuve, c_annee, sep = ": "))
     
     # Lecture fichier
@@ -67,7 +66,7 @@ for (c_fleuve in fleuves){
         }
         
         # Ecriture fichier pour annee/station
-        write_delim(donnees, paste("../Data/Extraction_Hydro/",
+        write_delim(donnees, paste("../../Data/Extraction_Hydro/",
                                    c_fleuve,
                                    "/",
                                    code_station,
@@ -91,7 +90,7 @@ for (c_fleuve in fleuves){
     
     # L'ensemble du fichier a été traité
     tableau_stations = tibble("Code station" = liste_codes, "Libelle station" = liste_stations)
-    write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+    write_delim(tableau_stations, paste("../../Data/Extraction_Hydro/",
                                         c_fleuve,
                                         "/Stations_",
                                         c_annee,
@@ -110,7 +109,7 @@ for (c_fleuve in fleuves){
   
   print(c_fleuve)
   # On récupère la liste de toutes les stations présentes au moins une fois
-  tableau_stations = read_delim(paste("../Data/Extraction_Hydro/",
+  tableau_stations = read_delim(paste("../../Data/Extraction_Hydro/",
                                       c_fleuve,
                                       "/Stations_",
                                       annees[1],
@@ -119,7 +118,7 @@ for (c_fleuve in fleuves){
                                 delim = ";",
                                 show_col_types = FALSE)
   for (c_annee in annees){
-    new_stations = read_delim(paste("../Data/Extraction_Hydro/",
+    new_stations = read_delim(paste("../../Data/Extraction_Hydro/",
                                       c_fleuve,
                                       "/Stations_",
                                       c_annee,
@@ -134,7 +133,7 @@ for (c_fleuve in fleuves){
   }
   # On regarde les années pour lesquelles chaque station est présente
   for (c_annee in annees){
-    new_stations = read_delim(paste("../Data/Extraction_Hydro/",
+    new_stations = read_delim(paste("../../Data/Extraction_Hydro/",
                                       c_fleuve,
                                       "/Stations_",
                                       c_annee,
@@ -148,7 +147,7 @@ for (c_fleuve in fleuves){
     }
   }
   
-  write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+  write_delim(tableau_stations, paste("../../Data/Extraction_Hydro/",
                                         c_fleuve,
                                         "/Stations.csv",
                                         sep = ""),
@@ -162,7 +161,7 @@ On va ensuite chercher dans les fichiers fiche_station.
 
 ```{r}
 for (c_fleuve in fleuves){
-  fiche_filename = paste("../Data/Brut/", c_fleuve, "/fiche-station.csv", sep = "")
+  fiche_filename = paste("../../Data/Brut/", c_fleuve, "/fiche-station.csv", sep = "")
   print(c_fleuve)
     
   # Lecture fichier
@@ -175,7 +174,7 @@ for (c_fleuve in fleuves){
   current_line = 1 # Première ligne à regarder
   
   # On reprend la liste des stations pertinentes
-  tableau_stations = read_delim(paste("../Data/Extraction_Hydro/",
+  tableau_stations = read_delim(paste("../../Data/Extraction_Hydro/",
                                       c_fleuve,
                                       "/Stations.csv",
                                       sep = ""),
@@ -207,7 +206,7 @@ for (c_fleuve in fleuves){
       }
     }
   }
-  write_delim(tableau_stations, paste("../Data/Extraction_Hydro/",
+  write_delim(tableau_stations, paste("../../Data/Extraction_Hydro/",
                                       c_fleuve,
                                       "/Stations.csv",
                                       sep = ""),
