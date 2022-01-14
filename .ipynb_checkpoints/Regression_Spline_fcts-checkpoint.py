@@ -52,6 +52,6 @@ def fct_Regression_Spline_predict(fit, liste_dates, liste_stations):
         dates_annee["Delta_Jour"] = (dates_annee - jour_an)
         dates_annee["Delta_Jour"] = dates_annee["Delta_Jour"].apply(lambda x: x.days)
         for index, row in dates_annee.iterrows():
-            predictions.append(moyennes_fit[moyennes_fit["Delta_Jour"] == row["Delta_Jour"]%(max_jours+1)][liste_stations].iloc[0,:])
+            predictions.append(fit[fit["Delta"] == row["Delta_Jour"]%(max_jours+1)][liste_stations].iloc[0,:])
     resultat[liste_stations] = predictions
     return resultat
