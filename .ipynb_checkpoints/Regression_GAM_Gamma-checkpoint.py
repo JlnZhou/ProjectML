@@ -55,3 +55,15 @@ def fct_Regression_SplineGamma_predict(fit, liste_dates, liste_stations):
             predictions.append(fit[fit["Delta"] == row["Delta_Jour"]%(max_jours+1)][liste_stations].iloc[0,:])
     resultat[liste_stations] = predictions
     return resultat
+
+
+def fct_Regression_SplineGamma_residus(fit, mesures, liste_stations):
+    
+    liste_dates = mesures["Date"]
+    predictions = fct_Regression_SplineGamma_predict(fit, liste_dates, liste_stations)
+    
+    resultat = pd.DataFrame({"Date": liste_dates})
+    for code in liste_stations:
+        residus = mesures[code] - predictions[code]
+        resultat[code] = residus
+    return resultat
