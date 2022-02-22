@@ -28,6 +28,6 @@ def fct_R2(Y_true, Y_pred, liste_stations):
     liste_r2 = []
     for code in liste_stations:
         moyenne_true = np.mean(Y_pred[code].values)
-        liste_r2.append(np.sum(np.square(Y_pred[code].values - moyenne_true))/np.sum(np.square(Y_true[code].values - moyenne_true)))
+        liste_r2.append(1- np.sum(np.square(Y_pred[code].values - Y_true[code].values))/np.sum(np.square(Y_true[code].values - moyenne_true)))
     resultat = pd.DataFrame({"Code station": liste_stations, "R2": liste_r2})
     return resultat
